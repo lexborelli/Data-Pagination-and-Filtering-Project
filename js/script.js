@@ -54,13 +54,13 @@ function addPagination(list) {
       linkList.querySelector("button").classList.add("active");
       
       linkList.addEventListener("click", (e) => {
-       const buttonClick = e.target.closest("button"); 
-       const activeButton = linkList.querySelector('active');  
+       const buttonClick = e.target.closest('button'); 
+       const activeButton = linkList.querySelector('.active');  
 
          if (buttonClick) {
-          activeButton.classList.remove('.active'); 
+          activeButton.classList.remove('active'); 
           buttonClick.classList.add('active');
-          showPage(list, buttonclick.innerHTML);
+          showPage(list, buttonClick.innerHTML);
          }
       });
 };
