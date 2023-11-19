@@ -6,39 +6,6 @@ const studentList = document.querySelector('.student-list');
 const linkList = document.querySelector(".link-list"); 
 const itemsPerPage = 9; 
 
-/* Search Bar*/
-const searchBox = document.querySelector('.header'); 
- 
-const searchInputHTML = `
-<label for="search" class="student-search">
-  <span>Search by name</span>
-  <input id="search" placeholder="Search by name...">
-  <button type="button"><img src="img/icn-search.svg" alt="Search icon"></button>
-</label>
-`
-searchBox.insertAdjacentHTML("beforeend", searchInputHTML);
-
-searchBox.addEventListener("keyup", () => {
-   const studentData = [];
-   const userInput = searchBox.value.toLowerCase();
-
-   for (let i = 0; i < data.length; i++) {
-      const studentName = data[i].name.toLowerCase(); 
-      
-      if (studentName.includes(userInput)) {
-         studentData.push(data[i]);
-      }
-   }
-   if (studentData.length > 0) {
-      addPagination(studentData);
-      showPage(studentData, 1);
-   } else {
-      const html = "<h3>No Result Found...</h3>"
-      studentList.innerHTML = html; 
-      linkList.innerHTML = "";
-   }
-});
-
 
 /*
 Created the `showPage` function
@@ -105,7 +72,44 @@ function addPagination(list) {
       });
 };
 
+/* Search Bar- Added search bar by utilizing the header element. Added html and input for the search element through javascript and attaching it to a variable I created called "searchInputHTML". The added the "searchInputHTML" to the searchbox element but made sure it was placed inside the header element but after the first child.
+Added an eventlistener to searchBox that is alerted when the user uses a keyboard to type the name in. StudentData was created to create a new empty string for the search. I then created a variable for the id name search which is userInput. I created another variable called searchBar and attached it to userinput and made sure it was lowercase sensitive so the name woukd be found if the name was Uppercase or lowercase. 
+Added a for loop to go through the length of data for the students first and last name. When the "Search" is performed, the student data is filtered so that only students whose name includes the search value are shown. The search is case-insensitive and work for partial matches. If no matches are found for a search, display a “No results found” type message on the page. 
+*/
 
+const searchBox = document.querySelector('.header'); 
+
+const searchInputHTML = `
+<label for="search" class="student-search">
+  <span>Search by name</span>
+  <input id="search" placeholder="Search by name...">
+  <button type="button"><img src="img/icn-search.svg" alt="Search icon"></button>
+</label>
+`
+searchBox.insertAdjacentHTML("beforeend", searchInputHTML);
+
+searchBox.addEventListener("keyup", () => {
+   const studentData = [];
+   const userInput = document.querySelector('#search');
+   const searchBar = userInput.value.toLowerCase();
+
+   for (let i = 0; i < data.length; i++) {
+      const studentName = `${data[i].name.first.toLowerCase()} ${data[i].name.last.toLowerCase()}`; 
+      
+      if (studentName.includes(searchBar)) {
+         studentData.push(data[i]);
+      }
+   }
+   if (studentData.length > 0) {
+      addPagination(studentData);
+      showPage(studentData, 1);
+   } else {
+      const html = "<h3>No Result Found...</h3>"
+      linkList.innerHTML = "";
+      studentList.innerHTML = html; 
+
+   }
+});
 
 /*Call the showPage function and pass it the list and page number to display. */ 
 addPagination(data); 
